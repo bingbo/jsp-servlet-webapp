@@ -1,16 +1,22 @@
 package com.ibingbo.servlets.user;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ibingbo.models.User;
+import com.ibingbo.services.UserService;
+import com.ibingbo.services.impl.UserServiceImpl;
+
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet("/IndexServlet")
+@WebServlet("/user/index")
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -27,7 +33,10 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		UserService userService=new UserServiceImpl();
+		List<User> users=userService.getUserList();
+		request.getSession().setAttribute("users", users);
+		response.sendRedirect("index.jsp");
 	}
 
 	/**
